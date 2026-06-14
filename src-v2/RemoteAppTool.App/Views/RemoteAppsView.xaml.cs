@@ -160,6 +160,38 @@ namespace RemoteAppTool.App.Views
             }
         }
 
+        private void ApplyClientSettingsToRdp(RemoteAppTool.RdpFileLib.RdpFile rdp)
+        {
+            var settings = RemoteAppTool.Core.ClientSettings.Load();
+            rdp.FullAddress = string.IsNullOrWhiteSpace(settings.ServerAddress) ? Environment.MachineName : settings.ServerAddress;
+            
+            if (int.TryParse(settings.ServerPort, out int port))
+                rdp.ServerPort = port;
+
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            if (settings.ConnectAsAdmin)
+            {
+                sb.AppendLine("administrative session:i:1");
+                sb.AppendLine("connect to console:i:1");
+            }
+            if (!settings.RedirectClipboard) sb.AppendLine("redirectclipboard:i:0");
+            if (!settings.RedirectPrinters) sb.AppendLine("redirectprinters:i:0");
+            if (settings.RedirectDrives) sb.AppendLine("drivestoredirect:s:*");
+            
+            if (!string.IsNullOrWhiteSpace(settings.Gateway))
+            {
+                sb.AppendLine($"gatewayhostname:s:{settings.Gateway}");
+                sb.AppendLine("gatewayusagemethod:i:1");
+            }
+            
+            if (!string.IsNullOrWhiteSpace(settings.AdvancedOptions))
+            {
+                sb.AppendLine(settings.AdvancedOptions);
+            }
+
+            rdp.AdditionalOptions = sb.ToString();
+        }
+
         private void BtnCreateRdp_Click(object sender, RoutedEventArgs e)
         {
             if (AppsDataGrid.SelectedItem is RemoteApp app)
@@ -174,9 +206,10 @@ namespace RemoteAppTool.App.Views
                             RemoteApplicationName = app.FullName,
                             RemoteApplicationProgram = app.Name,
                             RemoteApplicationMode = 1,
-                            RemoteApplicationCmdLine = app.CommandLine,
-                            FullAddress = Environment.MachineName
+                            RemoteApplicationCmdLine = app.CommandLine
                         };
+
+                        ApplyClientSettingsToRdp(rdp);
 
                         rdp.SaveRdpFile(sfd.FileName, true);
                         MessageBox.Show($"RDP file saved successfully to:\n{sfd.FileName}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);

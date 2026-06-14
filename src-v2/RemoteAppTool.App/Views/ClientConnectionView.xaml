@@ -30,10 +30,18 @@
                 <Separator Margin="0,8,0,24" />
                 
                 <!-- Display & Local Resources -->
-                <TextBlock Text="Local Resources" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" FontWeight="SemiBold" Margin="0,0,0,16" />
+                <TextBlock Text="Local Resources &amp; Connection" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" FontWeight="SemiBold" Margin="0,0,0,16" />
+                <CheckBox x:Name="ChkAdmin" Content="Connect as Administrator (Console Session)" Margin="0,0,0,8"/>
                 <CheckBox x:Name="ChkClipboard" Content="Enable Clipboard redirection" Margin="0,0,0,8" IsChecked="True"/>
                 <CheckBox x:Name="ChkPrinters" Content="Enable Printer redirection" Margin="0,0,0,8" IsChecked="True"/>
-                <CheckBox x:Name="ChkDrives" Content="Enable Drive redirection" Margin="0,0,0,8"/>
+                <CheckBox x:Name="ChkDrives" Content="Enable Drive redirection" Margin="0,0,0,24"/>
+
+                <Separator Margin="0,8,0,24" />
+
+                <!-- Advanced Options -->
+                <TextBlock Text="Advanced Options" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" FontWeight="SemiBold" Margin="0,0,0,16" />
+                <TextBlock Text="Add any raw RDP strings here (one per line). These will be appended exactly as written to the generated files." Foreground="{DynamicResource MaterialDesignBodyLight}" TextWrapping="Wrap" Margin="0,0,0,8" />
+                <TextBox x:Name="TxtAdvancedOptions" materialDesign:HintAssist.Hint="e.g. videoplaybackmode:i:1" Style="{DynamicResource MaterialDesignOutlinedTextBox}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="100" Margin="0,0,0,8"/>
 
             </StackPanel>
         </ScrollViewer>

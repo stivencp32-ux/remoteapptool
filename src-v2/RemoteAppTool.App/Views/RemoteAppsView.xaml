@@ -80,8 +80,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="EDIT" Style="{DynamicResource MaterialDesignFlatButton}" Click="BtnEdit_Click" Tag="{Binding Name}"/>
-                                    <Button Content="DELETE" Style="{DynamicResource MaterialDesignFlatButton}" Foreground="Red" Click="BtnDelete_Click" Tag="{Binding Name}"/>
+                                    <Button Content="EDIT" Style="{DynamicResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignBody}" Click="BtnEdit_Click" Tag="{Binding Name}"/>
+                                    <Button Content="DELETE" Style="{DynamicResource MaterialDesignFlatButton}" Foreground="#FFFF5252" Click="BtnDelete_Click" Tag="{Binding Name}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

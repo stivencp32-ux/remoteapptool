@@ -32,10 +32,10 @@
             <!-- Sidebar -->
             <materialDesign:Card Grid.Column="0" Margin="0,0,16,0" Padding="8" materialDesign:ElevationAssist.Elevation="Dp2">
                 <StackPanel>
-                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="RemoteApps" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavRemoteApps_Click" />
-                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="Host Options" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavHostOptions_Click" />
-                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="Client Connection" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavClientConnection_Click" />
-                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="About" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavAbout_Click" />
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignBody}" Content="RemoteApps" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavRemoteApps_Click" />
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignBody}" Content="Host Options" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavHostOptions_Click" />
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignBody}" Content="Client Connection" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavClientConnection_Click" />
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignBody}" Content="About" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavAbout_Click" />
                 </StackPanel>
             </materialDesign:Card>
 
