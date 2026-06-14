@@ -94,13 +94,17 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="SpaceBetween" Margin="0,0,0,16">
-                            <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="Published RemoteApps" VerticalAlignment="Center" />
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="Published RemoteApps" VerticalAlignment="Center" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Button Style="{StaticResource MaterialDesignOutlinedButton}" Content="REFRESH" Margin="0,0,16,0" Click="BtnRefresh_Click"/>
                                 <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="CREATE NEW" Click="BtnCreate_Click"/>
                             </StackPanel>
-                        </StackPanel>
+                        </Grid>
 
                         <!-- List of Apps -->
                         <DataGrid x:Name="AppsDataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" 
