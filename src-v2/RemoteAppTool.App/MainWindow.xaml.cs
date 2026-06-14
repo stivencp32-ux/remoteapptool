@@ -162,12 +162,75 @@ namespace RemoteAppTool.App
 
         private void BtnCreateRdp_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Select a RemoteApp first and click this to generate an .rdp file. Implementation in progress.", "Coming Soon");
+            if (AppsDataGrid.SelectedItem is RemoteApp app)
+            {
+                var sfd = new SaveFileDialog { Filter = "RDP Files (*.rdp)|*.rdp", FileName = app.Name + ".rdp" };
+                if (sfd.ShowDialog() == true)
+                {
+                    try
+                    {
+                        var rdp = new RemoteAppTool.RdpFileLib.RdpFile
+                        {
+                            RemoteApplicationName = app.FullName,
+                            RemoteApplicationProgram = app.Name, // or Alias
+                            RemoteApplicationMode = 1, // Enable RemoteApp mode
+                            RemoteApplicationCmdLine = app.CommandLine,
+                            FullAddress = Environment.MachineName // Default to local machine name, or could ask user in options
+                        };
+
+                        rdp.SaveRdpFile(sfd.FileName, true);
+                        MessageBox.Show($"RDP file saved successfully to:\n{sfd.FileName}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to create RDP file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a RemoteApp from the list first.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void BtnCreateMsi_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Select a RemoteApp first and click this to generate an MSI installer. Implementation in progress.", "Coming Soon");
+            if (AppsDataGrid.SelectedItem is RemoteApp app)
+            {
+                // First need an RDP file to package into MSI
+                var ofd = new OpenFileDialog { Filter = "RDP Files (*.rdp)|*.rdp", Title = "Select the RDP file to package" };
+                if (ofd.ShowDialog() == true)
+                {
+                    var sfd = new SaveFileDialog { Filter = "MSI Installers (*.msi)|*.msi", FileName = app.Name + ".msi" };
+                    if (sfd.ShowDialog() == true)
+                    {
+                        try
+                        {
+                            var rdp2msi = new Rdp2Msi
+                            {
+                                RdpPath = ofd.FileName
+                            };
+
+                            if (!rdp2msi.WixInstalled())
+                            {
+                                MessageBox.Show("WiX Toolset (candle.exe/light.exe) is not installed or found in the 'wix' folder.", "Missing Dependency", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                return;
+                            }
+
+                            rdp2msi.CreateMsi(sfd.FileName);
+                            MessageBox.Show($"MSI installer created successfully at:\n{sfd.FileName}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to create MSI: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a RemoteApp from the list first.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }
