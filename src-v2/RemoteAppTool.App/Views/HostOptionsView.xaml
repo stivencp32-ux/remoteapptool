@@ -1,0 +1,56 @@
+<UserControl x:Class="RemoteAppTool.App.Views.HostOptionsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Style="{DynamicResource MaterialDesignHeadline5TextBlock}" Text="Host Options" Margin="0,0,0,16"/>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="0,0,16,0">
+                <TextBlock Text="These settings apply to the local computer acting as the RemoteApp Host." Foreground="{DynamicResource MaterialDesignBodyLight}" Margin="0,0,0,24" />
+
+                <!-- Security Settings -->
+                <TextBlock Text="Security" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" FontWeight="SemiBold" Margin="0,0,0,16" />
+                <CheckBox x:Name="ChkDisableAllowList" Content="Disable RemoteApp Allow List" ToolTip="WARNING: Allows ANY executable to be run remotely." Margin="0,0,0,8"/>
+                <CheckBox x:Name="ChkAllowUnlisted" Content="Allow users to start unlisted programs on initial connection" Margin="0,0,0,24"/>
+
+                <Separator Margin="0,8,0,24" />
+
+                <!-- Session Timeouts -->
+                <TextBlock Text="Session Timeouts" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" FontWeight="SemiBold" Margin="0,0,0,16" />
+                
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox x:Name="ChkTimeoutDisconnected" Grid.Column="0" Content="Set time limit for disconnected sessions:" VerticalAlignment="Center" Checked="ChkTimeoutDisconnected_CheckedChanged" Unchecked="ChkTimeoutDisconnected_CheckedChanged"/>
+                    <TextBox x:Name="TxtDisconnectTime" Grid.Column="1" Margin="16,0,0,0" materialDesign:HintAssist.Hint="Seconds" VerticalAlignment="Center" Width="100" HorizontalAlignment="Left" IsEnabled="False"/>
+                </Grid>
+
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox x:Name="ChkTimeoutIdle" Grid.Column="0" Content="Set time limit for active but idle Remote Desktop Services sessions:" VerticalAlignment="Center" Checked="ChkTimeoutIdle_CheckedChanged" Unchecked="ChkTimeoutIdle_CheckedChanged"/>
+                    <TextBox x:Name="TxtIdleTime" Grid.Column="1" Margin="16,0,0,0" materialDesign:HintAssist.Hint="Seconds" VerticalAlignment="Center" Width="100" HorizontalAlignment="Left" IsEnabled="False"/>
+                </Grid>
+
+                <CheckBox x:Name="ChkLogoffWhenTimeout" Content="Terminate session when time limits are reached" Margin="0,0,0,8"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Style="{DynamicResource MaterialDesignRaisedButton}" Content="APPLY SETTINGS" Click="BtnSave_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

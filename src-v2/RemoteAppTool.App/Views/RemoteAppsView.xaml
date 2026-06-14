@@ -1,0 +1,98 @@
+<UserControl x:Class="RemoteAppTool.App.Views.RemoteAppsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Loaded="UserControl_Loaded">
+    <materialDesign:DialogHost x:Name="RootDialog" Identifier="RootDialog" DialogTheme="Inherit">
+        <materialDesign:DialogHost.DialogContent>
+            <!-- Edit/Create Dialog Content -->
+            <Grid Margin="24" Width="450">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock x:Name="DialogTitle" Grid.Row="0" Style="{DynamicResource MaterialDesignHeadline5TextBlock}" Text="Edit RemoteApp" Margin="0,0,0,16"/>
+                
+                <TextBox x:Name="TxtName" Grid.Row="1" materialDesign:HintAssist.Hint="Alias / Short Name" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,8"/>
+                <TextBox x:Name="TxtFullName" Grid.Row="2" materialDesign:HintAssist.Hint="Full Display Name" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,8"/>
+                
+                <Grid Grid.Row="3" Margin="0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TxtPath" Grid.Column="0" materialDesign:HintAssist.Hint="Executable Path" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"/>
+                    <Button Grid.Column="1" Style="{DynamicResource MaterialDesignOutlinedButton}" Content="..." Margin="8,0,0,0" VerticalAlignment="Bottom" Click="BtnBrowsePath_Click"/>
+                </Grid>
+
+                <Grid Grid.Row="4" Margin="0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TxtIconPath" Grid.Column="0" materialDesign:HintAssist.Hint="Icon Path (Optional)" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"/>
+                    <Button Grid.Column="1" Style="{DynamicResource MaterialDesignOutlinedButton}" Content="..." Margin="8,0,0,0" VerticalAlignment="Bottom" Click="BtnBrowseIcon_Click"/>
+                </Grid>
+
+                <CheckBox x:Name="ChkTSWA" Grid.Row="5" Content="Show in RD Web Access" Margin="0,16"/>
+
+                <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,24,0,0">
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="CANCEL" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="0,0,8,0"/>
+                    <Button Style="{DynamicResource MaterialDesignRaisedButton}" Content="SAVE" Click="BtnSaveDialog_Click"/>
+                </StackPanel>
+            </Grid>
+        </materialDesign:DialogHost.DialogContent>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Style="{DynamicResource MaterialDesignHeadline5TextBlock}" Text="Published RemoteApps" VerticalAlignment="Center" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Content="REFRESH" Margin="0,0,16,0" Click="BtnRefresh_Click"/>
+                    <Button Style="{DynamicResource MaterialDesignRaisedButton}" Content="CREATE NEW" Click="BtnCreate_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- List of Apps -->
+            <DataGrid x:Name="AppsDataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" 
+                      materialDesign:DataGridAssist.CellPadding="12 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                      SelectionMode="Single" SelectionUnit="FullRow">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Alias" Binding="{Binding Name}" Width="150" />
+                    <DataGridTextColumn Header="Display Name" Binding="{Binding FullName}" Width="180" />
+                    <DataGridTextColumn Header="Path" Binding="{Binding Path}" Width="*" />
+                    <DataGridTemplateColumn Header="Actions" Width="180">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="EDIT" Style="{DynamicResource MaterialDesignFlatButton}" Click="BtnEdit_Click" Tag="{Binding Name}"/>
+                                    <Button Content="DELETE" Style="{DynamicResource MaterialDesignFlatButton}" Foreground="Red" Click="BtnDelete_Click" Tag="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,16,0,0" HorizontalAlignment="Right">
+                <Button Style="{DynamicResource MaterialDesignRaisedButton}" Content="CREATE .RDP FILE" Margin="0,0,16,0" Click="BtnCreateRdp_Click"/>
+                <Button Style="{DynamicResource MaterialDesignRaisedButton}" Content="CREATE .MSI INSTALLER" Click="BtnCreateMsi_Click"/>
+            </StackPanel>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

@@ -15,125 +15,34 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Loaded="Window_Loaded">
     
-    <materialDesign:DialogHost x:Name="RootDialog" Identifier="RootDialog" DialogTheme="Inherit">
-        <materialDesign:DialogHost.DialogContent>
-            <!-- Edit/Create Dialog Content -->
-            <Grid Margin="24" Width="450">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                
-                <TextBlock x:Name="DialogTitle" Grid.Row="0" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="Edit RemoteApp" Margin="0,0,0,16"/>
-                
-                <TextBox x:Name="TxtName" Grid.Row="1" materialDesign:HintAssist.Hint="Alias / Short Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,8"/>
-                <TextBox x:Name="TxtFullName" Grid.Row="2" materialDesign:HintAssist.Hint="Full Display Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,8"/>
-                
-                <Grid Grid.Row="3" Margin="0,8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="TxtPath" Grid.Column="0" materialDesign:HintAssist.Hint="Executable Path" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedButton}" Content="..." Margin="8,0,0,0" VerticalAlignment="Bottom" Click="BtnBrowsePath_Click"/>
-                </Grid>
+    <Grid>
+        <materialDesign:ColorZone Mode="PrimaryMid" Padding="16" DockPanel.Dock="Top" Height="60" VerticalAlignment="Top" materialDesign:ElevationAssist.Elevation="Dp4">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="ServerNetwork" Width="28" Height="28" VerticalAlignment="Center" />
+                <TextBlock Margin="16 0 0 0" VerticalAlignment="Center" FontSize="22" FontWeight="SemiBold" Text="RemoteApp Tool Manager" />
+            </StackPanel>
+        </materialDesign:ColorZone>
 
-                <Grid Grid.Row="4" Margin="0,8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="TxtIconPath" Grid.Column="0" materialDesign:HintAssist.Hint="Icon Path (Optional)" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedButton}" Content="..." Margin="8,0,0,0" VerticalAlignment="Bottom" Click="BtnBrowseIcon_Click"/>
-                </Grid>
+        <Grid Margin="16, 80, 16, 16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <CheckBox x:Name="ChkTSWA" Grid.Row="5" Content="Show in RD Web Access" Margin="0,16"/>
-
-                <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,24,0,0">
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" Content="CANCEL" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="0,0,8,0"/>
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="SAVE" Click="BtnSaveDialog_Click"/>
+            <!-- Sidebar -->
+            <materialDesign:Card Grid.Column="0" Margin="0,0,16,0" Padding="8" materialDesign:ElevationAssist.Elevation="Dp2">
+                <StackPanel>
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="RemoteApps" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavRemoteApps_Click" />
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="Host Options" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavHostOptions_Click" />
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="Client Connection" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavClientConnection_Click" />
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="About" HorizontalAlignment="Stretch" Margin="0,0,0,8" Click="BtnNavAbout_Click" />
                 </StackPanel>
-            </Grid>
-        </materialDesign:DialogHost.DialogContent>
+            </materialDesign:Card>
 
-        <Grid>
-            <materialDesign:ColorZone Mode="PrimaryMid" Padding="16" DockPanel.Dock="Top" Height="60" VerticalAlignment="Top" materialDesign:ElevationAssist.Elevation="Dp4">
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="ServerNetwork" Width="28" Height="28" VerticalAlignment="Center" />
-                    <TextBlock Margin="16 0 0 0" VerticalAlignment="Center" FontSize="22" FontWeight="SemiBold" Text="RemoteApp Tool Manager" />
-                </StackPanel>
-            </materialDesign:ColorZone>
-
-            <Grid Margin="16, 80, 16, 16">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="220" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <!-- Sidebar -->
-                <materialDesign:Card Grid.Column="0" Margin="0,0,16,0" Padding="8" materialDesign:ElevationAssist.Elevation="Dp2">
-                    <StackPanel>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}" Content="RemoteApps" HorizontalAlignment="Stretch" Margin="0,0,0,8" />
-                        <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Host Options" HorizontalAlignment="Stretch" Margin="0,0,0,8" />
-                        <Button Style="{StaticResource MaterialDesignFlatButton}" Content="Client Connection" HorizontalAlignment="Stretch" Margin="0,0,0,8" />
-                        <Button Style="{StaticResource MaterialDesignFlatButton}" Content="About" HorizontalAlignment="Stretch" Margin="0,0,0,8" />
-                    </StackPanel>
-                </materialDesign:Card>
-
-                <!-- Main Content Area -->
-                <materialDesign:Card Grid.Column="1" Padding="24" materialDesign:ElevationAssist.Elevation="Dp2">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <Grid Grid.Row="0" Margin="0,0,0,16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="Published RemoteApps" VerticalAlignment="Center" />
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Style="{StaticResource MaterialDesignOutlinedButton}" Content="REFRESH" Margin="0,0,16,0" Click="BtnRefresh_Click"/>
-                                <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="CREATE NEW" Click="BtnCreate_Click"/>
-                            </StackPanel>
-                        </Grid>
-
-                        <!-- List of Apps -->
-                        <DataGrid x:Name="AppsDataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" 
-                                  materialDesign:DataGridAssist.CellPadding="12 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-                                  SelectionMode="Single" SelectionUnit="FullRow">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Alias" Binding="{Binding Name}" Width="150" />
-                                <DataGridTextColumn Header="Display Name" Binding="{Binding FullName}" Width="180" />
-                                <DataGridTextColumn Header="Path" Binding="{Binding Path}" Width="*" />
-                                <DataGridTemplateColumn Header="Actions" Width="180">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Button Content="EDIT" Style="{StaticResource MaterialDesignFlatButton}" Click="BtnEdit_Click" Tag="{Binding Name}"/>
-                                                <Button Content="DELETE" Style="{StaticResource MaterialDesignFlatButton}" Foreground="Red" Click="BtnDelete_Click" Tag="{Binding Name}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-
-                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,16,0,0" HorizontalAlignment="Right">
-                            <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="CREATE .RDP FILE" Margin="0,0,16,0" Click="BtnCreateRdp_Click"/>
-                            <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="CREATE .MSI INSTALLER" Click="BtnCreateMsi_Click"/>
-                        </StackPanel>
-                    </Grid>
-                </materialDesign:Card>
-            </Grid>
+            <!-- Main Content Area -->
+            <materialDesign:Card Grid.Column="1" Padding="24" materialDesign:ElevationAssist.Elevation="Dp2">
+                <ContentControl x:Name="MainContent" />
+            </materialDesign:Card>
         </Grid>
-    </materialDesign:DialogHost>
+    </Grid>
 </Window>

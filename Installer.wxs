@@ -1,0 +1,45 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="RemoteApp Tool v2" Manufacturer="RemoteApp Tool" Version="2.0.0.0" UpgradeCode="12345678-1234-1234-1234-123456789012" Scope="perMachine">
+    <MajorUpgrade DowngradeErrorMessage="A newer version of RemoteApp Tool is already installed." />
+
+    <!-- Features -->
+    <Feature Id="MainFeature" Title="RemoteApp Tool v2" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Files Include="RemoteAppTool-v2-Release\**" />
+    </ComponentGroup>
+
+    <!-- Directory structure -->
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="RemoteApp Tool v2" />
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="RemoteApp Tool" />
+    </StandardDirectory>
+
+    <StandardDirectory Id="DesktopFolder" />
+
+    <!-- Shortcuts -->
+    <Component Id="ApplicationShortcut" Directory="ApplicationProgramsFolder" Guid="87654321-4321-4321-4321-210987654321">
+      <Shortcut Id="ApplicationStartMenuShortcut" 
+                Name="RemoteApp Tool v2" 
+                Description="Manage RemoteApps" 
+                Target="[INSTALLFOLDER]RemoteAppTool.App.exe" 
+                WorkingDirectory="INSTALLFOLDER" />
+                
+      <Shortcut Id="ApplicationDesktopShortcut" 
+                Directory="DesktopFolder"
+                Name="RemoteApp Tool v2" 
+                Description="Manage RemoteApps" 
+                Target="[INSTALLFOLDER]RemoteAppTool.App.exe" 
+                WorkingDirectory="INSTALLFOLDER" />
+                
+      <RemoveFolder Id="CleanUpShortCuts" Directory="ApplicationProgramsFolder" On="uninstall" />
+      <RegistryValue Root="HKCU" Key="Software\RemoteAppTool\Install" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
+  </Package>
+</Wix>
